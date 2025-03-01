@@ -1,0 +1,30 @@
+alphabet_in:
+- DONE
+- RETRY
+- MAX_RETRIES
+default_start_state: VerificationFailedRound
+final_states:
+- FinishedRound
+label: Flow0AbciApp
+start_states:
+- VerificationFailedRound
+states:
+- VerifyDeploymentRound
+- ErrorRound
+- DeployAgentRound
+- InitializationRound
+- SetupEnvironmentRound
+- InstallDependenciesRound
+- VerificationFailedRound
+- ConfigureAgentRound
+- FinishedRound
+transition_func:
+  (ConfigureAgentRound, DONE): DeployAgentRound
+  (DeployAgentRound, DONE): VerifyDeploymentRound
+  (ErrorRound, RETRY): InitializationRound
+  (InitializationRound, DONE): SetupEnvironmentRound
+  (InstallDependenciesRound, DONE): ConfigureAgentRound
+  (SetupEnvironmentRound, DONE): InstallDependenciesRound
+  (VerificationFailedRound, MAX_RETRIES): ErrorRound
+  (VerificationFailedRound, RETRY): DeployAgentRound
+  (VerifyDeploymentRound, DONE): FinishedRound

@@ -1,0 +1,20 @@
+graph TD
+  VerificationFailedRound
+  VerifyDeploymentRound
+  ErrorRound
+  DeployAgentRound
+  InitializationRound
+  SetupEnvironmentRound
+  InstallDependenciesRound
+  VerificationFailedRound
+  ConfigureAgentRound
+  FinishedRound
+  InitializationRound -->|DONE| SetupEnvironmentRound
+  SetupEnvironmentRound -->|DONE| InstallDependenciesRound
+  InstallDependenciesRound -->|DONE| ConfigureAgentRound
+  ConfigureAgentRound -->|DONE| DeployAgentRound
+  DeployAgentRound -->|DONE| VerifyDeploymentRound
+  VerifyDeploymentRound -->|DONE| FinishedRound
+  VerificationFailedRound -->|RETRY| DeployAgentRound
+  VerificationFailedRound -->|MAX_RETRIES| ErrorRound
+  ErrorRound -->|RETRY| InitializationRound

@@ -1,0 +1,23 @@
+graph TD
+  InitializationRound
+  GlobalTimeoutRound
+  TimeoutConfigurationRound
+  LoggingAndMonitoringRound
+  WorkflowExecutionRound
+  InitializationRound
+  RetryMechanismRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| TimeoutConfigurationRound
+  InitializationRound -->|ERROR| ErrorHandlingRound
+  TimeoutConfigurationRound -->|DONE| ErrorHandlingRound
+  TimeoutConfigurationRound -->|ERROR| ErrorHandlingRound
+  TimeoutConfigurationRound -->|TIMEOUT| GlobalTimeoutRound
+  ErrorHandlingRound -->|DONE| LoggingAndMonitoringRound
+  ErrorHandlingRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| RetryMechanismRound
+  LoggingAndMonitoringRound -->|DONE| WorkflowExecutionRound
+  WorkflowExecutionRound -->|ERROR| ErrorHandlingRound
+  WorkflowExecutionRound -->|TIMEOUT| TimeoutConfigurationRound
+  RetryMechanismRound -->|DONE| WorkflowExecutionRound
+  RetryMechanismRound -->|ERROR| ErrorHandlingRound
+  GlobalTimeoutRound -->|TIMEOUT| ErrorHandlingRound

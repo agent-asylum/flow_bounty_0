@@ -1,0 +1,13 @@
+graph TD
+  InitializationRound
+  TimeoutRound
+  InitializationRound
+  MonitoringRound
+  MaintenanceRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| MaintenanceRound
+  MaintenanceRound -->|DONE| MonitoringRound
+  MonitoringRound -->|ERROR| ErrorHandlingRound
+  MonitoringRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|RETRY| MaintenanceRound
+  TimeoutRound -->|RETRY| MaintenanceRound

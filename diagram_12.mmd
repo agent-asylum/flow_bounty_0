@@ -1,0 +1,24 @@
+graph TD
+  ErrorHandlingRound
+  TimeoutRound
+  InitializationRound
+  PredictionRound
+  ApplicationTerminationRound
+  DataCollectionRound
+  SettlementRound
+  UserConfirmationRound
+  ErrorHandlingRound
+  FinalizationRound
+  InitializationRound -->|DONE| DataCollectionRound
+  DataCollectionRound -->|DONE| PredictionRound
+  PredictionRound -->|DONE| FinalizationRound
+  FinalizationRound -->|DONE| SettlementRound
+  FinalizationRound -->|USER_INPUT| UserConfirmationRound
+  UserConfirmationRound -->|CONFIRMED| SettlementRound
+  UserConfirmationRound -->|REJECTED| ErrorHandlingRound
+  ErrorHandlingRound -->|RESET| InitializationRound
+  ErrorHandlingRound -->|ERROR| TimeoutRound
+  TimeoutRound -->|RETRY| DataCollectionRound
+  TimeoutRound -->|MAX_RETRIES| ErrorHandlingRound
+  TimeoutRound -->|TIMEOUT| ErrorHandlingRound
+  SettlementRound -->|DONE| ApplicationTerminationRound

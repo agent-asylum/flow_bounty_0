@@ -1,0 +1,31 @@
+graph TD
+  ErrorHandlingRound
+  CollectSignatureRound
+  TimeoutRound
+  InitializationRound
+  ValidateTransactionRound
+  FinishedTransactionRound
+  TransactionSubmissionRound
+  FinalizationRound
+  ErrorHandlingRound
+  RegistrationRound
+  InitializationRound -->|DONE| RegistrationRound
+  InitializationRound -->|ERROR| ErrorHandlingRound
+  InitializationRound -->|TIMEOUT| TimeoutRound
+  RegistrationRound -->|DONE| CollectSignatureRound
+  RegistrationRound -->|ERROR| ErrorHandlingRound
+  RegistrationRound -->|TIMEOUT| TimeoutRound
+  CollectSignatureRound -->|DONE| FinalizationRound
+  CollectSignatureRound -->|ERROR| ErrorHandlingRound
+  CollectSignatureRound -->|TIMEOUT| TimeoutRound
+  FinalizationRound -->|DONE| ValidateTransactionRound
+  FinalizationRound -->|ERROR| ErrorHandlingRound
+  FinalizationRound -->|TIMEOUT| TimeoutRound
+  ValidateTransactionRound -->|DONE| TransactionSubmissionRound
+  ValidateTransactionRound -->|ERROR| ErrorHandlingRound
+  ValidateTransactionRound -->|TIMEOUT| TimeoutRound
+  TransactionSubmissionRound -->|DONE| FinishedTransactionRound
+  TransactionSubmissionRound -->|ERROR| ErrorHandlingRound
+  TransactionSubmissionRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|RETRY| InitializationRound
+  TimeoutRound -->|RETRY| InitializationRound

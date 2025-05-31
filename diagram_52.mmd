@@ -1,0 +1,36 @@
+graph TD
+  MessageValidationRound
+  ComposabilityInitializationRound
+  CrossChainMessageDeserializationRound
+  FollowUpActionRound
+  TimeoutRound
+  RefundLogicRound
+  ComposabilityRound
+  MaxRetriesExceededRound
+  MessageValidationRound
+  InitializationRound
+  FailedRound
+  MultiStepWorkflowRound
+  MessagePassingRound
+  CrossChainMessageSerializationRound
+  DecoupledOperationsRound
+  ExecutionGuaranteeRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| ComposabilityInitializationRound
+  ComposabilityInitializationRound -->|DONE| CrossChainMessageSerializationRound
+  CrossChainMessageSerializationRound -->|DONE| CrossChainMessageDeserializationRound
+  CrossChainMessageDeserializationRound -->|DONE| MessageValidationRound
+  MessageValidationRound -->|DONE| FollowUpActionRound
+  FollowUpActionRound -->|DONE| ExecutionGuaranteeRound
+  ExecutionGuaranteeRound -->|DONE| RefundLogicRound
+  RefundLogicRound -->|DONE| ComposabilityRound
+  ComposabilityRound -->|DONE| MultiStepWorkflowRound
+  MultiStepWorkflowRound -->|DONE| DecoupledOperationsRound
+  DecoupledOperationsRound -->|DONE| MessagePassingRound
+  MessagePassingRound -->|DONE| ErrorHandlingRound
+  ErrorHandlingRound -->|ERROR| TimeoutRound
+  TimeoutRound -->|TIMEOUT| MaxRetriesExceededRound
+  MaxRetriesExceededRound -->|MAX_RETRIES| FailedRound
+  FailedRound -->|RETRY| InitializationRound
+  ErrorHandlingRound -->|INVALID_MESSAGE| MessageValidationRound
+  ExecutionGuaranteeRound -->|EXECUTION_FAILURE| RefundLogicRound

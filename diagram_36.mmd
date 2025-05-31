@@ -1,0 +1,36 @@
+graph TD
+  ErrorHandlingRound
+  PredictionMarketRound
+  TimeoutRound
+  RewardDistributionRound
+  InitializationRound
+  RetryRound
+  ValidationRound
+  ResetRound
+  ErrorHandlingRound
+  FinalizationRound
+  MarketClosureRound
+  InitializationRound -->|DONE| PredictionMarketRound
+  PredictionMarketRound -->|DONE| ValidationRound
+  PredictionMarketRound -->|ERROR| ErrorHandlingRound
+  PredictionMarketRound -->|TIMEOUT| TimeoutRound
+  ValidationRound -->|DONE| RewardDistributionRound
+  ValidationRound -->|ERROR| ErrorHandlingRound
+  ValidationRound -->|TIMEOUT| TimeoutRound
+  RewardDistributionRound -->|DONE| MarketClosureRound
+  RewardDistributionRound -->|ERROR| ErrorHandlingRound
+  RewardDistributionRound -->|TIMEOUT| TimeoutRound
+  MarketClosureRound -->|DONE| FinalizationRound
+  MarketClosureRound -->|ERROR| ErrorHandlingRound
+  MarketClosureRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|DONE| RetryRound
+  ErrorHandlingRound -->|ERROR| ResetRound
+  TimeoutRound -->|DONE| RetryRound
+  TimeoutRound -->|TIMEOUT| ResetRound
+  RetryRound -->|DONE| PredictionMarketRound
+  RetryRound -->|ERROR| ErrorHandlingRound
+  RetryRound -->|RETRY_LIMIT_REACHED| FinalizationRound
+  RetryRound -->|TIMEOUT| TimeoutRound
+  RetryRound -->|MAX_RETRIES| ResetRound
+  FinalizationRound -->|DONE| InitializationRound
+  ResetRound -->|DONE| InitializationRound

@@ -1,0 +1,17 @@
+graph TD
+  InitializationRound
+  ChainlinkOracleIntegrationRound
+  ProjectSubmissionRound
+  AIModelTrainingRound
+  InitializationRound
+  ApplicationDeploymentRound
+  DemoVideoCreationRound
+  AgentDeploymentRound
+  HTSContractIntegrationRound
+  InitializationRound -->|DONE| AgentDeploymentRound
+  AgentDeploymentRound -->|DONE| AIModelTrainingRound
+  AIModelTrainingRound -->|DONE| HTSContractIntegrationRound
+  HTSContractIntegrationRound -->|DONE| ChainlinkOracleIntegrationRound
+  ChainlinkOracleIntegrationRound -->|DONE| ApplicationDeploymentRound
+  ApplicationDeploymentRound -->|DONE| DemoVideoCreationRound
+  DemoVideoCreationRound -->|DONE| ProjectSubmissionRound

@@ -1,0 +1,13 @@
+graph TD
+  ConfigurationRound
+  LayerZeroInteroperabilityRound
+  TransactionFinalizationRound
+  ConfigurationRound
+  CrossChainSwapRound
+  ConfigurationRound -->|DONE| CrossChainSwapRound
+  CrossChainSwapRound -->|DONE| LayerZeroInteroperabilityRound
+  LayerZeroInteroperabilityRound -->|DONE| TransactionFinalizationRound
+  ConfigurationRound -->|RESET| ConfigurationRound
+  CrossChainSwapRound -->|ERROR| ConfigurationRound
+  LayerZeroInteroperabilityRound -->|ERROR| ConfigurationRound
+  TransactionFinalizationRound -->|ERROR| ConfigurationRound

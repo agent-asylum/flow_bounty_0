@@ -1,0 +1,18 @@
+graph TD
+  HappyPathRound
+  RecoveryRound
+  GenericErrorRound
+  RetryLimitRound
+  FatalErrorRound
+  HappyPathRound
+  FinishedRound
+  HappyPathRound -->|DONE| FinishedRound
+  HappyPathRound -->|ERROR| GenericErrorRound
+  HappyPathRound -->|TIMEOUT| GenericErrorRound
+  RecoveryRound -->|RECOVERED| HappyPathRound
+  RecoveryRound -->|FAILED| RetryLimitRound
+  RetryLimitRound -->|RETRY_LIMIT_REACHED| FatalErrorRound
+  RetryLimitRound -->|RETRY_ALLOWED| RecoveryRound
+  GenericErrorRound -->|RETRY| RecoveryRound
+  GenericErrorRound -->|ESCALATE| FatalErrorRound
+  FatalErrorRound -->|DONE| FinishedRound

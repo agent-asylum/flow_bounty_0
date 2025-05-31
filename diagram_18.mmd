@@ -1,0 +1,21 @@
+graph TD
+  TimeoutRound
+  MaxRetriesExceededRound
+  TimeoutRound
+  ValidationRound
+  LoggingRound
+  SwapInitializationRound
+  ErrorHandlingRound
+  FinalizationRound
+  SwapInitializationRound -->|DONE| ValidationRound
+  SwapInitializationRound -->|SWAP_CANCELED| FinalizationRound
+  ValidationRound -->|DONE| LoggingRound
+  ValidationRound -->|ERROR| ErrorHandlingRound
+  LoggingRound -->|DONE| FinalizationRound
+  ErrorHandlingRound -->|RETRY| ValidationRound
+  ErrorHandlingRound -->|FAIL| FinalizationRound
+  ErrorHandlingRound -->|MAX_RETRIES| MaxRetriesExceededRound
+  MaxRetriesExceededRound -->|FAIL| FinalizationRound
+  TimeoutRound -->|RETRY| ValidationRound
+  TimeoutRound -->|FAIL| FinalizationRound
+  TimeoutRound -->|MAX_RETRIES| MaxRetriesExceededRound

@@ -1,0 +1,25 @@
+graph TD
+  DeploymentRound
+  CompletionRound
+  TimeoutRound
+  InitializationRound
+  FallbackRound
+  ErrorRound
+  DeploymentRound
+  ConfigurationRound
+  FinalizationRound
+  InitializationRound -->|DONE| DeploymentRound
+  DeploymentRound -->|DONE| ConfigurationRound
+  DeploymentRound -->|ERROR| ErrorRound
+  DeploymentRound -->|TIMEOUT| TimeoutRound
+  DeploymentRound -->|RESET| InitializationRound
+  ConfigurationRound -->|DONE| FinalizationRound
+  ConfigurationRound -->|ERROR| ErrorRound
+  ConfigurationRound -->|TIMEOUT| TimeoutRound
+  ConfigurationRound -->|RESET| DeploymentRound
+  FinalizationRound -->|DONE| CompletionRound
+  ErrorRound -->|RETRY| DeploymentRound
+  ErrorRound -->|MAX_RETRIES| FallbackRound
+  TimeoutRound -->|RETRY| DeploymentRound
+  TimeoutRound -->|MAX_RETRIES| FallbackRound
+  FallbackRound -->|DONE| CompletionRound

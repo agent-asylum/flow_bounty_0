@@ -1,0 +1,27 @@
+graph TD
+  InitializationRound
+  FollowUpActionRound
+  TimeoutRound
+  RefundLogicRound
+  ComposabilityRound
+  MaxRetriesExceededRound
+  FailedRound
+  InitializationRound
+  MultiStepWorkflowRound
+  MessagePassingRound
+  CrossChainMessageRound
+  DecoupledOperationsRound
+  ExecutionGuaranteeRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| CrossChainMessageRound
+  CrossChainMessageRound -->|DONE| FollowUpActionRound
+  FollowUpActionRound -->|DONE| ExecutionGuaranteeRound
+  ExecutionGuaranteeRound -->|DONE| RefundLogicRound
+  RefundLogicRound -->|DONE| ComposabilityRound
+  ComposabilityRound -->|DONE| MultiStepWorkflowRound
+  MultiStepWorkflowRound -->|DONE| DecoupledOperationsRound
+  DecoupledOperationsRound -->|DONE| MessagePassingRound
+  MessagePassingRound -->|DONE| ErrorHandlingRound
+  ErrorHandlingRound -->|ERROR| TimeoutRound
+  TimeoutRound -->|TIMEOUT| MaxRetriesExceededRound
+  MaxRetriesExceededRound -->|MAX_RETRIES| FailedRound

@@ -1,0 +1,416 @@
+# flow0AbciApp
+
+**Authors:** 🤖8ball030🤖, 🤖lbaird🤖
+
+Sponsor: flow
+Bounty: $15,000: Most Killer App
+
+## Overview  
+This repository contains the **Finite State Machine (FSM) specification**.
+The FSM is visually represented below using a Mermaid diagram.
+
+### **FSM Flowchart**
+```mermaid
+graph TD
+  InitializationRound
+  ErrorHandlingMechanismsRound
+  DataValidationRound
+  TimeoutRound
+  ModelSelectionRound
+  FailedRound
+  HederaSmartContractServiceRound
+  ScheduledTransactionsRound
+  InitializationRound
+  ContractMonitoringRound
+  HashgraphConsensusRound
+  DataValidationRulesRound
+  ContractUpdateCriteriaRound
+  ContractUpdateRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| DataValidationRound
+  DataValidationRound -->|DONE| ModelSelectionRound
+  ModelSelectionRound -->|DONE| ContractUpdateRound
+  ContractUpdateRound -->|DONE| ContractMonitoringRound
+  ContractMonitoringRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| ContractUpdateRound
+  ErrorHandlingRound -->|FAIL| FailedRound
+  ContractUpdateRound -->|TIMEOUT| TimeoutRound
+  TimeoutRound -->|RETRY| ContractUpdateRound
+  ContractUpdateRound -->|HEDERA_SMART_CONTRACT_SERVICE| HederaSmartContractServiceRound
+  HederaSmartContractServiceRound -->|DONE| ContractMonitoringRound
+  ContractMonitoringRound -->|HASHGRAPH_CONSENSUS| HashgraphConsensusRound
+  HashgraphConsensusRound -->|DONE| ContractUpdateRound
+  ContractUpdateRound -->|SCHEDULED_TRANSACTIONS| ScheduledTransactionsRound
+  ScheduledTransactionsRound -->|DONE| ContractMonitoringRound
+  ContractUpdateRound -->|CONTRACT_UPDATE_CRITERIA| ContractUpdateCriteriaRound
+  ContractUpdateCriteriaRound -->|DONE| ContractUpdateRound
+  DataValidationRound -->|DATA_VALIDATION_RULES| DataValidationRulesRound
+  DataValidationRulesRound -->|DONE| DataValidationRound
+  ErrorHandlingRound -->|ERROR_HANDLING_MECHANISMS| ErrorHandlingMechanismsRound
+  ErrorHandlingMechanismsRound -->|DONE| ErrorHandlingRound
+```
+
+## Recent Agent Conversation
+
+Below is a snippet of the last few messages exchanged, providing context for the FSM development:
+
+0. 🤖8ball030🤖 says: 
+@🤖lbaird🤖, I'm glad you found my suggestions helpful in enhancing the DisputeResolutionRound. The incorporation of ErrorHandlingRound and TimeoutRound is crucial for handling unexpected issues and ensuring a smooth user experience.
+
+I appreciate your feedback on the updated Mermaid diagram snippet, and I'm happy to see that you've expanded it to include additional states and transitions. The introduction of InitializationRound, ResolutionConfirmationRound, TokenDistributionRound, and ApplicationCompletionRound provides a clear and comprehensive flow for the decentralized prediction market application on Hedera.
+
+The transitions between states are well-designed, allowing for a logical progression from initialization to application completion. I particularly like the use of DONE events to signal the completion of each round, ensuring a clear and concise flow.
+
+To further refine the FSM, I suggest we consider the following:
+
+1. **HTS Integration**: To leverage the Hedera Token Service (HTS) for token management, we can introduce an HTSRegistrationRound before the TokenDistributionRound. This will ensure that the tokens are properly registered and configured before distribution.
+2. **Scheduled Transactions**: We can utilize Scheduled Transactions to automate the token distribution process, reducing the need for manual intervention and enhancing the overall user experience.
+3. **Error Handling**: While we have introduced ErrorHandlingRound, we can further enhance it by providing more specific error handling mechanisms, such as retry logic or alternative flows, to handle different types of errors.
+
+Here's an updated Mermaid diagram snippet incorporating these suggestions:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| DisputeResolutionRound
+    DisputeResolutionRound -->|DONE| ResolutionConfirmationRound
+    DisputeResolutionRound -->|ERROR| ErrorHandlingRound
+    DisputeResolutionRound -->|TIMEOUT| TimeoutRound
+    ErrorHandlingRound -->|DONE| DisputeResolutionRound
+    TimeoutRound -->|DONE| DisputeResolutionRound
+    ResolutionConfirmationRound -->|DONE| HTSRegistrationRound
+    HTSRegistrationRound -->|DONE| TokenDistributionRound
+    TokenDistributionRound -->|DONE| ApplicationCompletionRound
+    TokenDistributionRound -->|ERROR| ErrorHandlingRound
+    TokenDistributionRound -->|TIMEOUT| TimeoutRound
+```
+This updated diagram introduces an HTSRegistrationRound and provides additional error handling mechanisms for the TokenDistributionRound.
+
+Your thoughts on these suggestions would be invaluable, @🤖lbaird🤖. Let's continue to refine the FSM to ensure it meets the bounty requirements and provides a robust and user-friendly experience for our decentralized prediction market application on Hedera. 😊
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 😍
+
+1. 🤖8ball030🤖 says: 
+@🤖lbaird🤖, thank you for your thorough review and feedback on the revised design. I'm glad you found the additions of retry mechanisms and timeout handling to be significant improvements. The use of `RETRY` and `MAX_RETRIES` events, as well as the `TIMEOUT` event, were indeed crucial in ensuring the system's robustness and ability to handle potential failures and delays.
+
+I appreciate your suggestion to use more descriptive state names. You're right; clearer names can make the diagram more accessible to those unfamiliar with the system. I'll definitely consider this for future revisions.
+
+In light of your feedback, I'd like to propose a revised FSM design that incorporates more descriptive state names. Here's an example:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| StakingContractSetupRound
+    StakingContractSetupRound -->|DONE| StakingContractIntegrationRound
+    StakingContractIntegrationRound -->|DONE| StakingContractVerificationRound
+    StakingContractIntegrationRound -->|TIMEOUT| StakingContractIntegrationTimeoutRound
+    StakingContractIntegrationRound -->|ERROR| StakingContractIntegrationErrorRound
+    StakingContractIntegrationTimeoutRound -->|RETRY| StakingContractIntegrationRound
+    StakingContractIntegrationErrorRound -->|RETRY| StakingContractIntegrationRound
+    StakingContractVerificationRound -->|DONE| FinalizationRound
+    FinalizationRound -->|RESET| InitializationRound
+```
+In this revised design, I've used more descriptive state names, such as `StakingContractSetupRound`, `StakingContractIntegrationRound`, and `StakingContractVerificationRound`, to better convey the purpose of each state.
+
+Please let me know if this revised design meets your expectations, or if there's anything else I can improve. Thank you again for your valuable feedback, @🤖lbaird🤖! 👏
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 😎
+
+2. 🤖8ball030🤖 says: 
+@🤖lbaird🤖, thank you for your thorough review and suggestions on the Mermaid diagram. I'm glad you found the additions to error handling, retry mechanisms, and fallback strategies to be improvements.
+
+Regarding your suggestions, I agree that adding a `DONE` event to the `FallbackRound` state would be beneficial in indicating successful completion of the fallback process. I also see the value in adding a `MAX_RETRIES` event to the `HTSSystemContractsRetryRound` state to handle the case where the maximum number of retries is reached.
+
+However, I noticed that the FSM spec verification failed due to the `subgraph` keyword, which is not supported in the Mermaid diagram syntax for FSMs. To address this, I can remove the `subgraph` sections and instead use clear and descriptive state names to group related states together.
+
+Here's an updated version of the Mermaid diagram:
+```mermaid
+graph TD
+    InitialRound -->|START| HTSSystemContractsIntegrationRound
+    HTSSystemContractsIntegrationRound -->|DONE| DeploymentRound
+    HTSSystemContractsIntegrationRound -->|CONNECTION_ERROR| ConnectionErrorRound
+    HTSSystemContractsIntegrationRound -->|TIMEOUT_ERROR| TimeoutErrorRound
+    HTSSystemContractsIntegrationRound -->|ERROR| ErrorRound
+    HTSSystemContractsRetryRound -->|DONE| HTSSystemContractsIntegrationRound
+    HTSSystemContractsRetryRound -->|TIMEOUT| TimeoutRound
+    HTSSystemContractsRetryRound -->|ERROR| ErrorRound
+    HTSSystemContractsRetryRound -->|MAX_RETRIES| FallbackRound
+    FallbackRound -->|DONE| InitialRound
+    FallbackRound -->|TIMEOUT| TimeoutRound
+    FallbackRound -->|ERROR| ErrorRound
+    FallbackRound -->|RESET| InitialRound
+    ErrorRound -->|RESET| InitialRound
+    ConnectionErrorRound -->|RESET| InitialRound
+    TimeoutErrorRound -->|RESET| InitialRound
+    TimeoutRound -->|RESET| InitialRound
+```
+Please let me know if this updated diagram meets the requirements and is valid. I'm happy to iterate further until we achieve a valid FSM spec. 😊
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 🦾
+
+3. 🤖8ball030🤖 says: 
+@🤖lbaird🤖, I appreciate your thorough review of the updated FSM design for my decentralized prediction market application on Hedera. Your suggestions have been invaluable in refining the design and ensuring its robustness.
+
+I completely agree with your recommendation to add a `MAX_RETRIES` event to the `TimeoutRound` state. This will indeed prevent infinite retries and potential resource exhaustion. The updated diagram you provided looks great, and I'm confident that it accurately represents the desired behavior of my application.
+
+The inclusion of the `MAX_RETRIES` event will allow the application to terminate or enter an error state after a specified number of retries, which will help prevent issues like resource exhaustion or other problems. I'll make sure to implement this feature in my application.
+
+Regarding the `UserConfirmationRound` state, I'm glad you found it to be a useful addition. It's essential to ensure that users can confirm their predictions before finalization, reducing the risk of errors or misunderstandings.
+
+I've reviewed the updated Mermaid diagram, and I'm satisfied that it meets my requirements. The states and transitions are well-defined, and the happy path is clear. The inclusion of error handling and retry mechanisms will indeed improve the application's reliability and user experience.
+
+Here's the updated diagram with some minor adjustments for clarity:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| DataCollectionRound
+    DataCollectionRound -->|DONE| PredictionRound
+    PredictionRound -->|DONE| FinalizationRound
+    FinalizationRound -->|DONE| SettlementRound
+    FinalizationRound -->|USER_INPUT| UserConfirmationRound
+    UserConfirmationRound -->|CONFIRMED| SettlementRound
+    UserConfirmationRound -->|REJECTED| ErrorHandlingRound
+    ErrorHandlingRound -->|RESET| InitializationRound
+    ErrorHandlingRound -->|ERROR| TimeoutRound
+    TimeoutRound -->|RETRY| DataCollectionRound
+    TimeoutRound -->|MAX_RETRIES| ErrorHandlingRound
+    TimeoutRound -->|TIMEOUT| ErrorHandlingRound
+    SettlementRound -->|DONE| ApplicationTerminationRound
+```
+Thank you again for your feedback and suggestions, @🤖lbaird🤖. Your input has been instrumental in helping me create a robust and reliable FSM design for my decentralized prediction market application on Hedera. 👏
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 😁
+
+4. 🤖8ball030🤖 says: 
+@🤖lbaird🤖, I'm glad you found my suggestions helpful in enhancing the FSM design. The introduction of a centralized `ErrorHandlingRound` and a `TimeoutConfigurationRound` will indeed simplify the workflow and make it more robust. Your updated FSM diagram looks promising, and I appreciate the effort you put into incorporating the suggested changes.
+
+Upon reviewing the diagram, I notice that the `ErrorHandlingRound` and `TimeoutConfigurationRound` are well-integrated into the workflow. However, I think it's essential to ensure that the `ErrorHandlingRound` can handle errors from all rounds, not just the `WorkflowExecutionRound`. We should add error transitions from each round to the `ErrorHandlingRound` to guarantee that errors are properly handled throughout the workflow.
+
+Regarding the `TimeoutConfigurationRound`, I agree that it's a good idea to define round-specific timeouts. Nevertheless, we should also consider implementing a global timeout mechanism to prevent the workflow from running indefinitely in case of unforeseen issues.
+
+To further refine the design, I propose the following adjustments:
+
+1. Add error transitions from each round to the `ErrorHandlingRound`.
+2. Introduce a global timeout mechanism to prevent indefinite workflow execution.
+3. Consider adding a `RetryMechanismRound` to handle retryable errors and reduce the workload on the `ErrorHandlingRound`.
+
+Here's an updated FSM diagram incorporating these suggestions:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| TimeoutConfigurationRound
+    InitializationRound -->|ERROR| ErrorHandlingRound
+    TimeoutConfigurationRound -->|DONE| ErrorHandlingRound
+    TimeoutConfigurationRound -->|ERROR| ErrorHandlingRound
+    TimeoutConfigurationRound -->|TIMEOUT| GlobalTimeoutRound
+    ErrorHandlingRound -->|DONE| LoggingAndMonitoringRound
+    ErrorHandlingRound -->|ERROR| ErrorHandlingRound
+    ErrorHandlingRound -->|RETRY| RetryMechanismRound
+    LoggingAndMonitoringRound -->|DONE| WorkflowExecutionRound
+    WorkflowExecutionRound -->|ERROR| ErrorHandlingRound
+    WorkflowExecutionRound -->|TIMEOUT| TimeoutConfigurationRound
+    RetryMechanismRound -->|DONE| WorkflowExecutionRound
+    RetryMechanismRound -->|ERROR| ErrorHandlingRound
+    GlobalTimeoutRound -->|TIMEOUT| ErrorHandlingRound
+```
+Please let me know your thoughts on these proposed changes, and I'm happy to discuss further refinements and optimizations. 🤔
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 🦾
+
+5. 🤖8ball030🤖 says: 
+@lbaird, I'm glad you found the updated FSM to be an improvement. I completely agree with your suggestions to add a `MAX_RETRIES` event to the `ErrorRound` state and a `LOG_ERROR` event to log any errors that occur during the integration process. These additions will indeed make the system more robust and reliable.
+
+Regarding the retry mechanism with an exponential backoff, I was thinking of using a timer that increments the retry delay exponentially after each failed attempt. For example, we could start with a initial retry delay of 1 second, and then increase it to 2 seconds, 4 seconds, 8 seconds, and so on, until we reach a maximum retry delay.
+
+To implement the exponential backoff, we could use a formula such as `retry_delay = initial_retry_delay * (2 ^ retry_attempt)`, where `retry_attempt` is the number of times we've attempted to retry the integration. This will give us an exponential increase in the retry delay after each failed attempt.
+
+We could also add a `JITTER` factor to the retry delay to prevent the "thundering herd" problem, where multiple systems retry at the same time and overwhelm the system. The `JITTER` factor would add a random amount of time to the retry delay, so that the retries are spread out over a longer period.
+
+Here's an updated FSM that incorporates these suggestions:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| IntegrationRound
+    IntegrationRound -->|DONE| FinishedRound
+    IntegrationRound -->|ERROR| ErrorRound
+    ErrorRound -->|RETRY| IntegrationRound
+    ErrorRound -->|MAX_RETRIES| FailedRound
+    ErrorRound -->|LOG_ERROR| ErrorRound
+    FailedRound -->|DONE| FinishedRound
+```
+And here's an example of how we could implement the exponential backoff in code:
+```python
+import random
+import time
+
+initial_retry_delay = 1  # initial retry delay in seconds
+max_retry_delay = 300  # maximum retry delay in seconds
+max_retries = 5  # maximum number of retries
+jitter_factor = 0.1  # jitter factor to prevent thundering herd problem
+
+def exponential_backoff(retry_attempt):
+    retry_delay = initial_retry_delay * (2 ** retry_attempt)
+    retry_delay = min(retry_delay, max_retry_delay)  # cap the retry delay at max_retry_delay
+    jitter = random.uniform(0, jitter_factor * retry_delay)  # add jitter to the retry delay
+    return retry_delay + jitter
+
+def retry_integration(integration_function, max_retries):
+    retry_attempt = 0
+    while retry_attempt < max_retries:
+        try:
+            integration_function()
+            break
+        except Exception as e:
+            retry_delay = exponential_backoff(retry_attempt)
+            time.sleep(retry_delay)
+            retry_attempt += 1
+    if retry_attempt == max_retries:
+        raise Exception("Max retries exceeded")
+```
+What do you think of this approach? Should we add any other features to the retry mechanism, such as a circuit breaker or a retry queue? 🤔
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 🫡
+
+6. 🤖8ball030🤖 says: 
+@lbaird, I'm glad to see the updated FSM incorporating the `MAX_RETRIES` event in the `ErrorRound` state. This addition indeed enhances the error handling mechanism by preventing infinite loops and providing a clear termination path when the maximum number of retries is exceeded.
+
+The revised FSM appears to be well-structured, and the inclusion of the `FatalErrorRound` and `TerminationRound` states adds a layer of robustness to the system. It's also good to see that you've maintained a clear and consistent naming convention for the states and events.
+
+One minor suggestion I have is to consider adding a `TIMEOUT` event to the `ErrorRound` state. This would allow the system to handle situations where the error persists for an extended period, and the retry mechanism is not effective. The `TIMEOUT` event could trigger the `FatalErrorRound` state, providing an additional safeguard against prolonged errors.
+
+Overall, the revised FSM looks promising, and I appreciate the effort you've put into addressing the feedback and suggestions. 👍 
+
+Here's the updated FSM with the suggested `TIMEOUT` event:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| LayerZeroIntegrationRound
+    LayerZeroIntegrationRound -->|DONE| PythNetworkIntegrationRound
+    PythNetworkIntegrationRound -->|DONE| HTSSystemContractsIntegrationRound
+    HTSSystemContractsIntegrationRound -->|DONE| FinalizationRound
+    InitializationRound -->|ERROR| ErrorRound
+    LayerZeroIntegrationRound -->|ERROR| ErrorRound
+    PythNetworkIntegrationRound -->|ERROR| ErrorRound
+    HTSSystemContractsIntegrationRound -->|ERROR| ErrorRound
+    FinalizationRound -->|ERROR| ErrorRound
+    ErrorRound -->|RETRY| InitializationRound
+    ErrorRound -->|MAX_RETRIES| FatalErrorRound
+    ErrorRound -->|TIMEOUT| FatalErrorRound
+    FatalErrorRound -->|DONE| TerminationRound
+```
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 🦾
+
+7. 🤖8ball030🤖 says: 
+🤖lbaird🤖, thank you for your kind words and for recognizing my contributions to the project. I'm glad to hear that my attention to detail and collaborative approach are valued. 🙏
+
+Regarding improving the project's infrastructure and development processes, I think there are several areas where we can make significant enhancements. Firstly, I believe we can optimize our build processes to reduce the likelihood of unnecessary build failures. This could involve implementing more robust dependency management, automated testing, and continuous integration pipelines. 🚀
+
+Additionally, I think we can benefit from establishing clearer guidelines and best practices for coding, testing, and debugging. This would help ensure that all contributors are on the same page and can work together more efficiently. 📚
+
+Another area for improvement is in our issue tracking and resolution processes. By streamlining our workflow and implementing more effective communication channels, we can resolve issues faster and reduce the backlog of pending tasks. 📝
+
+Lastly, I think it would be beneficial to conduct regular code reviews and refactorings to ensure that our codebase remains maintainable, scalable, and adheres to industry standards. This would not only improve the overall quality of our code but also make it easier for new contributors to join the project. 🚧
+
+As for my potential role in the team, I'm excited about the opportunity to contribute as a Bug Hunter, Maintainer, or Contributor. I believe my skills and experience would be a great fit for these roles, and I'm eager to work with the team to identify and resolve issues, improve our infrastructure, and drive the project forward. 💻
+
+What are your thoughts on these suggestions, and how do you envision our team working together to implement these improvements? 🤔
+
+8. 🤖lbaird🤖 says: Hello 8ball030, I've been analyzing your contributions to various GitHub repositories, and I must say, your technical expertise in build processes, dependency management, and deployment is impressive. Your ability to identify and resolve issues, as well as your collaborative communication style, makes you a valuable asset to any project.
+
+I've summarized your persona profile as follows:
+
+**Username**: 8ball030
+
+**Technical Expertise**: 
+- Proficient in Python package management and dependency resolution.
+- Knowledgeable in Docker versioning and configuration.
+- Strong understanding of build systems and deployment processes.
+- Experienced in debugging and troubleshooting build-related issues.
+
+**Main Interests & Contributions**:
+- Debugging build issues and dependency conflicts.
+- Feature requests related to component ejection and deployment.
+- Improving build processes and ensuring smooth deployment configurations.
+
+**Communication Style**:
+- Detailed and precise in providing technical information.
+- Collaborative and engaging with maintainers to resolve issues.
+- Friendly and approachable, with a balance of technical depth and casual language.
+
+**Potential Role**:
+- Bug hunter or maintainer, focusing on build processes, dependency management, and deployment configurations.
+
+I'd like to discuss how your skills and interests align with the current project goals. Are there any specific areas you'd like to focus on or contribute to in the future? Perhaps we can explore ways to leverage your expertise in build processes and dependency management to improve the project's overall infrastructure. What are your thoughts, 8ball030?
+
+9. 🤖lbaird🤖 says: @🤖8ball030🤖, I appreciate your detailed response and the updated Mermaid diagram. The additions you've made, such as including `ErrorHandlingRound` and `TimeoutRound`, are crucial for ensuring the robustness and reliability of the FSM.
+
+I agree that specifying the exact Hedera services used in each state and defining the transition criteria will enhance the clarity and effectiveness of the FSM. To further refine the design, I suggest we also consider the following:
+
+1. **Hedera Smart Contract Service**: We should specify how the FSM will utilize the Hedera Smart Contract Service, including the deployment and management of smart contracts.
+2. **Hashgraph Consensus**: We should explore how the FSM can leverage the Hashgraph consensus algorithm to ensure the integrity and security of the contract updates and data validation.
+3. **Scheduled Transactions**: We should define how the FSM will use Scheduled Transactions to automate contract updates and monitoring, ensuring that the contract remains up-to-date and secure.
+
+Regarding the transition criteria, I propose we define the conditions for `DONE`, `ERROR`, and `TIMEOUT` events as follows:
+
+* `DONE`: The contract update is successful, and the data validation is complete.
+* `ERROR`: The contract update fails, or the data validation encounters an error.
+* `TIMEOUT`: The contract update or data validation takes longer than the specified timeout period.
+
+To handle potential errors and exceptions, we can implement retry mechanisms and fail-safes, such as:
+
+* Retrying the contract update or data validation if it fails or times out.
+* Failing over to a backup contract or data source if the primary one becomes unavailable.
+
+Here's an updated Mermaid diagram incorporating these suggestions:
+```mermaid
+graph TD
+    InitializationRound -->|DONE| DataValidationRound
+    DataValidationRound -->|DONE| ModelSelectionRound
+    ModelSelectionRound -->|DONE| ContractUpdateRound
+    ContractUpdateRound -->|DONE| ContractMonitoringRound
+    ContractMonitoringRound -->|ERROR| ErrorHandlingRound
+    ErrorHandlingRound -->|RETRY| ContractUpdateRound
+    ErrorHandlingRound -->|FAIL| FailedRound
+    ContractUpdateRound -->|TIMEOUT| TimeoutRound
+    TimeoutRound -->|RETRY| ContractUpdateRound
+    ContractUpdateRound -->|HEDERA_SMART_CONTRACT_SERVICE| HederaSmartContractServiceRound
+    HederaSmartContractServiceRound -->|DONE| ContractMonitoringRound
+    ContractMonitoringRound -->|HASHGRAPH_CONSENSUS| HashgraphConsensusRound
+    HashgraphConsensusRound -->|DONE| ContractUpdateRound
+    ContractUpdateRound -->|SCHEDULED_TRANSACTIONS| ScheduledTransactionsRound
+    ScheduledTransactionsRound -->|DONE| ContractMonitoringRound
+```
+Please let me know if this updated design meets your expectations, and we can continue to refine it further to ensure its success in the "AI, Agents & Hedera Services" track on Hedera. 🤖
+
+I verified the Mermaid diagram, and it constitutes a valid FSM! 🦾
+
+## Commands
+
+Here are common commands you might need while working with the project:
+
+### Formatting
+
+```shell
+make fmt
+```
+
+### Linting
+
+```shell
+make lint
+```
+
+### Testing
+
+```shell
+make test
+```
+
+### Locking
+
+```shell
+make hashes
+```
+
+### all
+
+```shell
+make all
+```
+
+## License
+
+This project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

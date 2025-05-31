@@ -1,0 +1,41 @@
+graph TD
+  ErrorRound
+  EcosystemIntegrationRound
+  FailedRound
+  TransactionRound
+  InitializationRound
+  LzReadRound
+  ErrorRound
+  ChainIntegrationRound
+  ResetRound
+  FinishedRound
+  HederaSmartContractRound
+  FinalizationRound
+  InitializationRound -->|DONE| ChainIntegrationRound
+  InitializationRound -->|TIMEOUT| ErrorRound
+  InitializationRound -->|ERROR| ErrorRound
+  ChainIntegrationRound -->|DONE| HederaSmartContractRound
+  ChainIntegrationRound -->|ERROR| ErrorRound
+  ChainIntegrationRound -->|TIMEOUT| ErrorRound
+  HederaSmartContractRound -->|DONE| EcosystemIntegrationRound
+  HederaSmartContractRound -->|ERROR| ErrorRound
+  HederaSmartContractRound -->|TIMEOUT| ErrorRound
+  EcosystemIntegrationRound -->|DONE| TransactionRound
+  EcosystemIntegrationRound -->|ERROR| ErrorRound
+  EcosystemIntegrationRound -->|TIMEOUT| ErrorRound
+  TransactionRound -->|DONE| LzReadRound
+  TransactionRound -->|ERROR| ErrorRound
+  TransactionRound -->|TIMEOUT| ErrorRound
+  TransactionRound -->|NO_MAJORITY| ErrorRound
+  LzReadRound -->|DONE| FinalizationRound
+  LzReadRound -->|ERROR| ErrorRound
+  LzReadRound -->|TIMEOUT| ErrorRound
+  ErrorRound -->|RETRY| InitializationRound
+  ErrorRound -->|MAX_RETRIES| FailedRound
+  ErrorRound -->|RESET| ResetRound
+  ErrorRound -->|DONE| InitializationRound
+  ResetRound -->|DONE| InitializationRound
+  FinalizationRound -->|DONE| FinishedRound
+  FinalizationRound -->|ERROR| ErrorRound
+  FinalizationRound -->|TIMEOUT| ErrorRound
+  FailedRound -->|RETRY| InitializationRound

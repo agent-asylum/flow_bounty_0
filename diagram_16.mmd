@@ -1,0 +1,37 @@
+graph TD
+  InitializationRound
+  ErrorHandlingMechanismsRound
+  DataValidationRound
+  TimeoutRound
+  ModelSelectionRound
+  FailedRound
+  HederaSmartContractServiceRound
+  ScheduledTransactionsRound
+  InitializationRound
+  ContractMonitoringRound
+  HashgraphConsensusRound
+  DataValidationRulesRound
+  ContractUpdateCriteriaRound
+  ContractUpdateRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| DataValidationRound
+  DataValidationRound -->|DONE| ModelSelectionRound
+  ModelSelectionRound -->|DONE| ContractUpdateRound
+  ContractUpdateRound -->|DONE| ContractMonitoringRound
+  ContractMonitoringRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| ContractUpdateRound
+  ErrorHandlingRound -->|FAIL| FailedRound
+  ContractUpdateRound -->|TIMEOUT| TimeoutRound
+  TimeoutRound -->|RETRY| ContractUpdateRound
+  ContractUpdateRound -->|HEDERA_SMART_CONTRACT_SERVICE| HederaSmartContractServiceRound
+  HederaSmartContractServiceRound -->|DONE| ContractMonitoringRound
+  ContractMonitoringRound -->|HASHGRAPH_CONSENSUS| HashgraphConsensusRound
+  HashgraphConsensusRound -->|DONE| ContractUpdateRound
+  ContractUpdateRound -->|SCHEDULED_TRANSACTIONS| ScheduledTransactionsRound
+  ScheduledTransactionsRound -->|DONE| ContractMonitoringRound
+  ContractUpdateRound -->|CONTRACT_UPDATE_CRITERIA| ContractUpdateCriteriaRound
+  ContractUpdateCriteriaRound -->|DONE| ContractUpdateRound
+  DataValidationRound -->|DATA_VALIDATION_RULES| DataValidationRulesRound
+  DataValidationRulesRound -->|DONE| DataValidationRound
+  ErrorHandlingRound -->|ERROR_HANDLING_MECHANISMS| ErrorHandlingMechanismsRound
+  ErrorHandlingMechanismsRound -->|DONE| ErrorHandlingRound

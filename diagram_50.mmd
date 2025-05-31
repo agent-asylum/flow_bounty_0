@@ -1,0 +1,14 @@
+graph TD
+  InitializationRound
+  SuccessfulRound
+  TimeoutRound
+  FailedRound
+  InitializationRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| ErrorHandlingRound
+  ErrorHandlingRound -->|MAX_RETRIES| FailedRound
+  ErrorHandlingRound -->|DONE| TimeoutRound
+  TimeoutRound -->|TIMEOUT| ErrorHandlingRound
+  TimeoutRound -->|DONE| SuccessfulRound
+  FailedRound -->|RETRY| ErrorHandlingRound

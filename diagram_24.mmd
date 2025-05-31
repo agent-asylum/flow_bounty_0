@@ -1,0 +1,41 @@
+graph TD
+  RewardWithdrawalRound
+  UserInteractionRound
+  TimeoutRound
+  MarketClosureRound
+  RewardDistributionRound
+  RewardWithdrawalRound
+  LoggingRound
+  DisputeResolutionRound
+  DisputeResolutionOutcomeRound
+  ErrorHandlingRound
+  VotingMechanismRound
+  FinalizationRound
+  UserNotificationRound
+  RewardWithdrawalRound -->|DONE| UserInteractionRound
+  RewardWithdrawalRound -->|ERROR| ErrorHandlingRound
+  RewardWithdrawalRound -->|TIMEOUT| TimeoutRound
+  FinalizationRound -->|DONE| DisputeResolutionRound
+  FinalizationRound -->|ERROR| ErrorHandlingRound
+  FinalizationRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionRound -->|DONE| VotingMechanismRound
+  DisputeResolutionRound -->|ERROR| ErrorHandlingRound
+  DisputeResolutionRound -->|TIMEOUT| TimeoutRound
+  VotingMechanismRound -->|DONE| DisputeResolutionOutcomeRound
+  VotingMechanismRound -->|ERROR| ErrorHandlingRound
+  VotingMechanismRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionOutcomeRound -->|DONE| RewardDistributionRound
+  DisputeResolutionOutcomeRound -->|ERROR| ErrorHandlingRound
+  DisputeResolutionOutcomeRound -->|TIMEOUT| TimeoutRound
+  RewardDistributionRound -->|DONE| UserNotificationRound
+  RewardDistributionRound -->|ERROR| ErrorHandlingRound
+  RewardDistributionRound -->|TIMEOUT| TimeoutRound
+  UserNotificationRound -->|DONE| MarketClosureRound
+  UserNotificationRound -->|ERROR| ErrorHandlingRound
+  UserNotificationRound -->|TIMEOUT| TimeoutRound
+  MarketClosureRound -->|DONE| LoggingRound
+  MarketClosureRound -->|ERROR| ErrorHandlingRound
+  MarketClosureRound -->|TIMEOUT| TimeoutRound
+  LoggingRound -->|DONE| UserInteractionRound
+  LoggingRound -->|ERROR| ErrorHandlingRound
+  LoggingRound -->|TIMEOUT| TimeoutRound

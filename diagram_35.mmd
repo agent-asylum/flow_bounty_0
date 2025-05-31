@@ -1,0 +1,74 @@
+graph TD
+  InitializationRound
+  LogErrorRound
+  MaxRetriesErrorRound
+  RecoveryRound
+  NotifyAdminRound
+  DataRelatedErrorRound
+  ExecutionRound
+  NetworkErrorRound
+  ContractExecutionErrorRound
+  InitializationRound
+  RetryRound
+  RestartRound
+  TimeoutErrorRound
+  ConnectionTimeoutErrorRound
+  FatalErrorRound
+  ConfigurationErrorRound
+  ErrorRound
+  SystemContractsErrorRound
+  InvalidDataErrorRound
+  InitializationRound -->|DONE| ExecutionRound
+  InitializationRound -->|TIMEOUT| TimeoutErrorRound
+  InitializationRound -->|ERROR| ErrorRound
+  ErrorRound -->|CONNECTION_TIMEOUT| ConnectionTimeoutErrorRound
+  ErrorRound -->|INVALID_DATA| InvalidDataErrorRound
+  ErrorRound -->|CONTRACT_EXECUTION| ContractExecutionErrorRound
+  ErrorRound -->|NETWORK_ERROR| NetworkErrorRound
+  ErrorRound -->|SYSTEM_CONTRACTS_ERROR| SystemContractsErrorRound
+  ErrorRound -->|CONFIGURATION_ERROR| ConfigurationErrorRound
+  ErrorRound -->|DATA_RELATED_ERROR| DataRelatedErrorRound
+  ConnectionTimeoutErrorRound -->|DONE| RecoveryRound
+  ConnectionTimeoutErrorRound -->|TIMEOUT| TimeoutErrorRound
+  ConnectionTimeoutErrorRound -->|ERROR| ErrorRound
+  ConnectionTimeoutErrorRound -->|RETRY| RetryRound
+  ConnectionTimeoutErrorRound -->|LOG_ERROR| LogErrorRound
+  InvalidDataErrorRound -->|DONE| RecoveryRound
+  InvalidDataErrorRound -->|TIMEOUT| TimeoutErrorRound
+  InvalidDataErrorRound -->|ERROR| ErrorRound
+  InvalidDataErrorRound -->|RETRY| RetryRound
+  InvalidDataErrorRound -->|LOG_ERROR| LogErrorRound
+  ContractExecutionErrorRound -->|DONE| RecoveryRound
+  ContractExecutionErrorRound -->|TIMEOUT| TimeoutErrorRound
+  ContractExecutionErrorRound -->|ERROR| ErrorRound
+  ContractExecutionErrorRound -->|RETRY| RetryRound
+  ContractExecutionErrorRound -->|LOG_ERROR| LogErrorRound
+  NetworkErrorRound -->|DONE| RecoveryRound
+  NetworkErrorRound -->|TIMEOUT| TimeoutErrorRound
+  NetworkErrorRound -->|ERROR| ErrorRound
+  NetworkErrorRound -->|RETRY| RetryRound
+  NetworkErrorRound -->|LOG_ERROR| LogErrorRound
+  SystemContractsErrorRound -->|DONE| RecoveryRound
+  SystemContractsErrorRound -->|TIMEOUT| TimeoutErrorRound
+  SystemContractsErrorRound -->|ERROR| ErrorRound
+  SystemContractsErrorRound -->|RETRY| RetryRound
+  SystemContractsErrorRound -->|LOG_ERROR| LogErrorRound
+  ConfigurationErrorRound -->|DONE| RecoveryRound
+  ConfigurationErrorRound -->|TIMEOUT| TimeoutErrorRound
+  ConfigurationErrorRound -->|ERROR| ErrorRound
+  ConfigurationErrorRound -->|RETRY| RetryRound
+  ConfigurationErrorRound -->|LOG_ERROR| LogErrorRound
+  DataRelatedErrorRound -->|DONE| RecoveryRound
+  DataRelatedErrorRound -->|TIMEOUT| TimeoutErrorRound
+  DataRelatedErrorRound -->|ERROR| ErrorRound
+  DataRelatedErrorRound -->|RETRY| RetryRound
+  DataRelatedErrorRound -->|LOG_ERROR| LogErrorRound
+  RetryRound -->|DONE| RecoveryRound
+  RetryRound -->|TIMEOUT| TimeoutErrorRound
+  RetryRound -->|ERROR| ErrorRound
+  RetryRound -->|MAX_RETRIES| MaxRetriesErrorRound
+  MaxRetriesErrorRound -->|RETRY| RetryRound
+  MaxRetriesErrorRound -->|MANUAL_RETRY_LIMIT| FatalErrorRound
+  FatalErrorRound -->|DONE| RestartRound
+  FatalErrorRound -->|NOTIFY_ADMIN| NotifyAdminRound
+  FatalErrorRound -->|LOG_ERROR| LogErrorRound

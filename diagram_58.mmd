@@ -1,0 +1,20 @@
+graph TD
+  DevelopmentRound
+  UnitTestingRound
+  ReviewRound
+  IntegrationTestingRound
+  RetryDeploymentRound
+  DevelopmentRound
+  DeploymentRound
+  CompletedRound
+  DevelopmentRound -->|DONE| UnitTestingRound
+  UnitTestingRound -->|DONE| IntegrationTestingRound
+  UnitTestingRound -->|ERROR| DevelopmentRound
+  IntegrationTestingRound -->|DONE| ReviewRound
+  IntegrationTestingRound -->|ERROR| DevelopmentRound
+  ReviewRound -->|DONE| DeploymentRound
+  ReviewRound -->|ERROR| DevelopmentRound
+  DeploymentRound -->|DONE| CompletedRound
+  DeploymentRound -->|TIMEOUT| RetryDeploymentRound
+  RetryDeploymentRound -->|DONE| CompletedRound
+  RetryDeploymentRound -->|ERROR| DevelopmentRound

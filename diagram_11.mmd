@@ -1,0 +1,28 @@
+graph TD
+  HTSSystemContractsRetryRound
+  HTSSystemContractsRetryRound
+  ConnectionErrorRound
+  TimeoutRound
+  HTSSystemContractsIntegrationRound
+  TimeoutErrorRound
+  FallbackRound
+  ErrorRound
+  InitialRound
+  DeploymentRound
+  InitialRound -->|START| HTSSystemContractsIntegrationRound
+  HTSSystemContractsIntegrationRound -->|DONE| DeploymentRound
+  HTSSystemContractsIntegrationRound -->|CONNECTION_ERROR| ConnectionErrorRound
+  HTSSystemContractsIntegrationRound -->|TIMEOUT_ERROR| TimeoutErrorRound
+  HTSSystemContractsIntegrationRound -->|ERROR| ErrorRound
+  HTSSystemContractsRetryRound -->|DONE| HTSSystemContractsIntegrationRound
+  HTSSystemContractsRetryRound -->|TIMEOUT| TimeoutRound
+  HTSSystemContractsRetryRound -->|ERROR| ErrorRound
+  HTSSystemContractsRetryRound -->|MAX_RETRIES| FallbackRound
+  FallbackRound -->|DONE| InitialRound
+  FallbackRound -->|TIMEOUT| TimeoutRound
+  FallbackRound -->|ERROR| ErrorRound
+  FallbackRound -->|RESET| InitialRound
+  ErrorRound -->|RESET| InitialRound
+  ConnectionErrorRound -->|RESET| InitialRound
+  TimeoutErrorRound -->|RESET| InitialRound
+  TimeoutRound -->|RESET| InitialRound

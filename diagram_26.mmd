@@ -1,0 +1,20 @@
+graph TD
+  StakingContractIntegrationRound
+  StakingContractSetupRound
+  InitializationRound
+  StakingContractIntegrationErrorRound
+  StakingContractVerificationRound
+  StakingContractIntegrationRound
+  StakingContractIntegrationTimeoutRound
+  FinalizationRound
+  InitializationRound -->|DONE| StakingContractSetupRound
+  StakingContractSetupRound -->|DONE| StakingContractIntegrationRound
+  StakingContractIntegrationRound -->|DONE| StakingContractVerificationRound
+  StakingContractIntegrationRound -->|TIMEOUT| StakingContractIntegrationTimeoutRound
+  StakingContractIntegrationRound -->|ERROR| StakingContractIntegrationErrorRound
+  StakingContractIntegrationTimeoutRound -->|RETRY| StakingContractIntegrationRound
+  StakingContractIntegrationTimeoutRound -->|MAX_RETRIES| FinalizationRound
+  StakingContractIntegrationErrorRound -->|RETRY| StakingContractIntegrationRound
+  StakingContractIntegrationErrorRound -->|MAX_RETRIES| FinalizationRound
+  StakingContractVerificationRound -->|DONE| FinalizationRound
+  FinalizationRound -->|RESET| InitializationRound

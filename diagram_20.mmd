@@ -1,0 +1,20 @@
+graph TD
+  ErrorRound
+  CompletionRound
+  MaintainRound
+  ErrorRound
+  MonitorRound
+  InitRound
+  InitRound -->|DONE| MonitorRound
+  InitRound -->|TIMEOUT| ErrorRound
+  MonitorRound -->|DONE| MaintainRound
+  MonitorRound -->|TIMEOUT| ErrorRound
+  MonitorRound -->|ERROR| ErrorRound
+  MaintainRound -->|DONE| CompletionRound
+  MaintainRound -->|TIMEOUT| ErrorRound
+  MaintainRound -->|ERROR| ErrorRound
+  CompletionRound -->|DONE| InitRound
+  CompletionRound -->|TIMEOUT| ErrorRound
+  CompletionRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| InitRound
+  ErrorRound -->|DONE| InitRound

@@ -1,0 +1,22 @@
+graph TD
+  InitializationRound
+  TimeoutRound
+  AIModelTrainingRound
+  InitializationRound
+  HederaDeploymentRound
+  AIModelInferenceRound
+  ErrorHandlingRound
+  FinalizationRound
+  InitializationRound -->|DONE| AIModelTrainingRound
+  AIModelTrainingRound -->|DONE| HederaDeploymentRound
+  AIModelTrainingRound -->|ERROR| ErrorHandlingRound
+  AIModelTrainingRound -->|TIMEOUT| TimeoutRound
+  HederaDeploymentRound -->|DONE| AIModelInferenceRound
+  HederaDeploymentRound -->|ERROR| ErrorHandlingRound
+  HederaDeploymentRound -->|TIMEOUT| TimeoutRound
+  AIModelInferenceRound -->|DONE| FinalizationRound
+  AIModelInferenceRound -->|ERROR| ErrorHandlingRound
+  AIModelInferenceRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|DONE| InitializationRound
+  TimeoutRound -->|DONE| InitializationRound
+  FinalizationRound -->|DONE| InitializationRound

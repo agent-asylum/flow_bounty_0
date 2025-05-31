@@ -1,0 +1,25 @@
+graph TD
+  InitializationRound
+  HCSIntegrationRound
+  InitializationRound
+  DataAnalyticsRound
+  HTSIntegrationRound
+  LoggingRound
+  ReportingRound
+  ErrorHandlingRound
+  DecisionMakingRound
+  FinalizationRound
+  InitializationRound -->|DONE| LoggingRound
+  LoggingRound -->|DONE| DataAnalyticsRound
+  DataAnalyticsRound -->|DONE| ReportingRound
+  ReportingRound -->|DONE| DecisionMakingRound
+  DecisionMakingRound -->|DONE| HTSIntegrationRound
+  HTSIntegrationRound -->|DONE| HCSIntegrationRound
+  HCSIntegrationRound -->|DONE| FinalizationRound
+  LoggingRound -->|ERROR| ErrorHandlingRound
+  DataAnalyticsRound -->|ERROR| ErrorHandlingRound
+  ReportingRound -->|ERROR| ErrorHandlingRound
+  DecisionMakingRound -->|ERROR| ErrorHandlingRound
+  HTSIntegrationRound -->|ERROR| ErrorHandlingRound
+  HCSIntegrationRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|DONE| LoggingRound

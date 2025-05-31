@@ -1,0 +1,28 @@
+graph TD
+  InitializationRound
+  CompletionRound
+  FinishedRound
+  SetupRound
+  InitializationRound
+  RetryRound
+  FailureRound
+  EndRound
+  ValidationRound
+  ErrorRound
+  DeploymentRound
+  ConfigurationRound
+  InitializationRound -->|DONE| SetupRound
+  SetupRound -->|DONE| ConfigurationRound
+  ConfigurationRound -->|DONE| ValidationRound
+  ValidationRound -->|DONE| DeploymentRound
+  DeploymentRound -->|DONE| CompletionRound
+  InitializationRound -->|ERROR| ErrorRound
+  SetupRound -->|ERROR| ErrorRound
+  ConfigurationRound -->|ERROR| ErrorRound
+  ValidationRound -->|ERROR| ErrorRound
+  DeploymentRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| RetryRound
+  RetryRound -->|DONE| CompletionRound
+  RetryRound -->|MAX_RETRIES| FailureRound
+  CompletionRound -->|DONE| FinishedRound
+  FinishedRound -->|DONE| EndRound

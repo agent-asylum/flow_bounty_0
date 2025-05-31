@@ -1,0 +1,31 @@
+graph TD
+  ConfigurationErrorRound
+  LogErrorRound
+  MaxRetriesErrorRound
+  RecoveryRound
+  HandleErrorRound
+  NotifyAdminRound
+  ErrorRound
+  InitializationRound
+  RetryRound
+  TimeoutErrorRound
+  FatalErrorRound
+  ConfigurationErrorRound
+  ConfigurationRound
+  InitializationRound -->|DONE| ConfigurationRound
+  ConfigurationRound -->|ERROR| ConfigurationErrorRound
+  ConfigurationErrorRound -->|DONE| RecoveryRound
+  ConfigurationErrorRound -->|ERROR| HandleErrorRound
+  ConfigurationErrorRound -->|RETRY| RetryRound
+  ConfigurationErrorRound -->|LOG_ERROR| LogErrorRound
+  ConfigurationErrorRound -->|MANUAL_RETRY_LIMIT| MaxRetriesErrorRound
+  MaxRetriesErrorRound -->|DONE| FatalErrorRound
+  MaxRetriesErrorRound -->|ERROR| HandleErrorRound
+  MaxRetriesErrorRound -->|RETRY| RetryRound
+  MaxRetriesErrorRound -->|LOG_ERROR| LogErrorRound
+  FatalErrorRound -->|DONE| NotifyAdminRound
+  HandleErrorRound -->|TIMEOUT| TimeoutErrorRound
+  HandleErrorRound -->|ERROR| ErrorRound
+  HandleErrorRound -->|RETRY| RetryRound
+  HandleErrorRound -->|LOG_ERROR| LogErrorRound
+  RecoveryRound -->|DONE| InitializationRound

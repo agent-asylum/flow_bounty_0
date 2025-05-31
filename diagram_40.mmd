@@ -1,0 +1,17 @@
+graph TD
+  ErrorRound
+  FailedRound
+  TransactionRound
+  InitializationRound
+  ErrorRound
+  FinishedRound
+  FinalizationRound
+  InitializationRound -->|DONE| TransactionRound
+  InitializationRound -->|TIMEOUT| ErrorRound
+  InitializationRound -->|ERROR| ErrorRound
+  TransactionRound -->|DONE| FinalizationRound
+  TransactionRound -->|ERROR| ErrorRound
+  TransactionRound -->|TIMEOUT| ErrorRound
+  ErrorRound -->|RETRY| InitializationRound
+  ErrorRound -->|MAX_RETRIES| FailedRound
+  FinalizationRound -->|DONE| FinishedRound

@@ -1,0 +1,23 @@
+graph TD
+  ErrorRound
+  HTSSystemContractsIntegrationRound
+  LayerZeroIntegrationRound
+  InitializationRound
+  PythNetworkIntegrationRound
+  FatalErrorRound
+  ErrorRound
+  TerminationRound
+  FinalizationRound
+  InitializationRound -->|DONE| LayerZeroIntegrationRound
+  LayerZeroIntegrationRound -->|DONE| PythNetworkIntegrationRound
+  PythNetworkIntegrationRound -->|DONE| HTSSystemContractsIntegrationRound
+  HTSSystemContractsIntegrationRound -->|DONE| FinalizationRound
+  InitializationRound -->|ERROR| ErrorRound
+  LayerZeroIntegrationRound -->|ERROR| ErrorRound
+  PythNetworkIntegrationRound -->|ERROR| ErrorRound
+  HTSSystemContractsIntegrationRound -->|ERROR| ErrorRound
+  FinalizationRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| InitializationRound
+  ErrorRound -->|MAX_RETRIES| FatalErrorRound
+  ErrorRound -->|TIMEOUT| FatalErrorRound
+  FatalErrorRound -->|DONE| TerminationRound

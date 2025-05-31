@@ -1,0 +1,77 @@
+graph TD
+  InitializationRound
+  PredictionSettlementRound
+  PredictionTokenCreationRound
+  InitializationRound
+  RewardMechanismRound
+  PredictionValidationRound
+  ErrorHandlingRound
+  ChainlinkOracleIntegrationRound
+  VotingRound
+  UserRegistrationRound
+  DisputeResolutionRound
+  HCSLoggingRound
+  RewardWithdrawalRound
+  UserKYCRound
+  ResultsDisplayRound
+  HederaEVMContractDeploymentRound
+  UserInteractionRound
+  TimeoutRound
+  PredictionVolumeTrackingRound
+  UserAuthenticationRound
+  PredictionProcessingRound
+  FinalizationRound
+  InitializationRound -->|DONE| HederaEVMContractDeploymentRound
+  InitializationRound -->|ERROR| ErrorHandlingRound
+  InitializationRound -->|TIMEOUT| TimeoutRound
+  HederaEVMContractDeploymentRound -->|DONE| PredictionTokenCreationRound
+  HederaEVMContractDeploymentRound -->|ERROR| ErrorHandlingRound
+  HederaEVMContractDeploymentRound -->|TIMEOUT| TimeoutRound
+  PredictionTokenCreationRound -->|DONE| ChainlinkOracleIntegrationRound
+  PredictionTokenCreationRound -->|ERROR| ErrorHandlingRound
+  PredictionTokenCreationRound -->|TIMEOUT| TimeoutRound
+  ChainlinkOracleIntegrationRound -->|DONE| PredictionSettlementRound
+  ChainlinkOracleIntegrationRound -->|ERROR| ErrorHandlingRound
+  ChainlinkOracleIntegrationRound -->|TIMEOUT| TimeoutRound
+  PredictionSettlementRound -->|DONE| HCSLoggingRound
+  PredictionSettlementRound -->|ERROR| ErrorHandlingRound
+  PredictionSettlementRound -->|TIMEOUT| TimeoutRound
+  HCSLoggingRound -->|DONE| UserRegistrationRound
+  HCSLoggingRound -->|ERROR| ErrorHandlingRound
+  HCSLoggingRound -->|TIMEOUT| TimeoutRound
+  UserRegistrationRound -->|DONE| UserKYCRound
+  UserRegistrationRound -->|ERROR| ErrorHandlingRound
+  UserRegistrationRound -->|TIMEOUT| TimeoutRound
+  UserKYCRound -->|DONE| UserAuthenticationRound
+  UserKYCRound -->|ERROR| ErrorHandlingRound
+  UserKYCRound -->|TIMEOUT| TimeoutRound
+  UserAuthenticationRound -->|DONE| UserInteractionRound
+  UserAuthenticationRound -->|ERROR| ErrorHandlingRound
+  UserAuthenticationRound -->|TIMEOUT| TimeoutRound
+  UserInteractionRound -->|PLACE_PREDICTION| PredictionValidationRound
+  UserInteractionRound -->|VIEW_RESULTS| ResultsDisplayRound
+  UserInteractionRound -->|WITHDRAW_REWARDS| RewardWithdrawalRound
+  UserInteractionRound -->|ERROR| ErrorHandlingRound
+  UserInteractionRound -->|TIMEOUT| TimeoutRound
+  PredictionValidationRound -->|DONE| PredictionVolumeTrackingRound
+  PredictionValidationRound -->|ERROR| ErrorHandlingRound
+  PredictionValidationRound -->|TIMEOUT| TimeoutRound
+  PredictionVolumeTrackingRound -->|DONE| PredictionProcessingRound
+  PredictionVolumeTrackingRound -->|ERROR| ErrorHandlingRound
+  PredictionVolumeTrackingRound -->|TIMEOUT| TimeoutRound
+  PredictionProcessingRound -->|DONE| RewardMechanismRound
+  PredictionProcessingRound -->|ERROR| ErrorHandlingRound
+  PredictionProcessingRound -->|TIMEOUT| TimeoutRound
+  RewardMechanismRound -->|DONE| FinalizationRound
+  RewardMechanismRound -->|ERROR| ErrorHandlingRound
+  RewardMechanismRound -->|TIMEOUT| TimeoutRound
+  ResultsDisplayRound -->|DONE| UserInteractionRound
+  ResultsDisplayRound -->|ERROR| ErrorHandlingRound
+  ResultsDisplayRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionRound -->|DONE| FinalizationRound
+  DisputeResolutionRound -->|ERROR| ErrorHandlingRound
+  DisputeResolutionRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionRound -->|VOTING_MECHANISM| VotingRound
+  VotingRound -->|DONE| DisputeResolutionRound
+  VotingRound -->|ERROR| ErrorHandlingRound
+  VotingRound -->|TIMEOUT| TimeoutRound

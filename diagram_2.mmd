@@ -1,0 +1,29 @@
+graph TD
+  AgentSetupRound
+  FinishedRound
+  StakingContractIntegrationFailedRound
+  FailedRound
+  InitializationRound
+  AgentSetupRound
+  StakingContractIntegrationRound
+  AgentSetupTimeoutRound
+  AgentSetupFailedRound
+  StakingContractIntegrationTimeoutRound
+  InitializationRound -->|DONE| AgentSetupRound
+  InitializationRound -->|MAX_RETRIES| FailedRound
+  AgentSetupRound -->|DONE| StakingContractIntegrationRound
+  AgentSetupRound -->|ERROR| AgentSetupFailedRound
+  AgentSetupRound -->|TIMEOUT| AgentSetupTimeoutRound
+  StakingContractIntegrationRound -->|DONE| FinishedRound
+  StakingContractIntegrationRound -->|ERROR| StakingContractIntegrationFailedRound
+  StakingContractIntegrationRound -->|TIMEOUT| StakingContractIntegrationTimeoutRound
+  AgentSetupFailedRound -->|RETRY| AgentSetupRound
+  AgentSetupFailedRound -->|MAX_RETRIES| FailedRound
+  AgentSetupTimeoutRound -->|RETRY| AgentSetupRound
+  AgentSetupTimeoutRound -->|MAX_RETRIES| FailedRound
+  StakingContractIntegrationFailedRound -->|RETRY| StakingContractIntegrationRound
+  StakingContractIntegrationFailedRound -->|MAX_RETRIES| FailedRound
+  StakingContractIntegrationTimeoutRound -->|RETRY| StakingContractIntegrationRound
+  StakingContractIntegrationTimeoutRound -->|MAX_RETRIES| FailedRound
+  FinishedRound -->|RESET| InitializationRound
+  FailedRound -->|RESET| InitializationRound

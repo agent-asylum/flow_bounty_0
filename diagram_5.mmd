@@ -1,0 +1,33 @@
+graph TD
+  FallbackRound
+  MaxRetriesErrorRound
+  RecoveryRound
+  DataRelatedErrorRound
+  NetworkErrorRound
+  RetryRound
+  TimeoutErrorRound
+  FallbackRound
+  ErrorRound
+  SystemContractsErrorRound
+  FallbackRound -->|DONE| RecoveryRound
+  FallbackRound -->|TIMEOUT| TimeoutErrorRound
+  FallbackRound -->|ERROR| ErrorRound
+  ErrorRound -->|NETWORK_ERROR| NetworkErrorRound
+  ErrorRound -->|SYSTEM_CONTRACTS_ERROR| SystemContractsErrorRound
+  ErrorRound -->|DATA_RELATED_ERROR| DataRelatedErrorRound
+  NetworkErrorRound -->|DONE| RecoveryRound
+  NetworkErrorRound -->|TIMEOUT| TimeoutErrorRound
+  NetworkErrorRound -->|ERROR| ErrorRound
+  NetworkErrorRound -->|RETRY| RetryRound
+  SystemContractsErrorRound -->|DONE| RecoveryRound
+  SystemContractsErrorRound -->|TIMEOUT| TimeoutErrorRound
+  SystemContractsErrorRound -->|ERROR| ErrorRound
+  SystemContractsErrorRound -->|RETRY| RetryRound
+  DataRelatedErrorRound -->|DONE| RecoveryRound
+  DataRelatedErrorRound -->|TIMEOUT| TimeoutErrorRound
+  DataRelatedErrorRound -->|ERROR| ErrorRound
+  DataRelatedErrorRound -->|RETRY| RetryRound
+  RetryRound -->|DONE| RecoveryRound
+  RetryRound -->|TIMEOUT| TimeoutErrorRound
+  RetryRound -->|ERROR| ErrorRound
+  RetryRound -->|MAX_RETRIES| MaxRetriesErrorRound

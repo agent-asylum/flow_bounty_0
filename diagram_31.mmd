@@ -1,0 +1,20 @@
+graph TD
+  ErrorHandlingRound
+  TokenDistributionRound
+  AlternateFlowRound
+  InitializationRound
+  ConfirmationRound
+  ErrorHandlingRound
+  ValidationRound
+  FinishedRound
+  InitializationRound -->|DONE| ValidationRound
+  ValidationRound -->|DONE| ConfirmationRound
+  ConfirmationRound -->|DONE| TokenDistributionRound
+  TokenDistributionRound -->|DONE| FinishedRound
+  InitializationRound -->|ERROR| ErrorHandlingRound
+  ValidationRound -->|ERROR| ErrorHandlingRound
+  ConfirmationRound -->|ERROR| ErrorHandlingRound
+  TokenDistributionRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| InitializationRound
+  ErrorHandlingRound -->|ALTERNATE_FLOW| AlternateFlowRound
+  AlternateFlowRound -->|DONE| FinishedRound

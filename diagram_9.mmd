@@ -1,0 +1,21 @@
+graph TD
+  InitializationRound
+  ApplicationCompletionRound
+  TimeoutRound
+  TokenDistributionRound
+  HTSRegistrationRound
+  InitializationRound
+  ResolutionConfirmationRound
+  DisputeResolutionRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| DisputeResolutionRound
+  DisputeResolutionRound -->|DONE| ResolutionConfirmationRound
+  DisputeResolutionRound -->|ERROR| ErrorHandlingRound
+  DisputeResolutionRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|DONE| DisputeResolutionRound
+  TimeoutRound -->|DONE| DisputeResolutionRound
+  ResolutionConfirmationRound -->|DONE| HTSRegistrationRound
+  HTSRegistrationRound -->|DONE| TokenDistributionRound
+  TokenDistributionRound -->|DONE| ApplicationCompletionRound
+  TokenDistributionRound -->|ERROR| ErrorHandlingRound
+  TokenDistributionRound -->|TIMEOUT| TimeoutRound

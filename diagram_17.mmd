@@ -1,0 +1,24 @@
+graph TD
+  ErrorHandlingRound
+  VotingRound
+  TimeoutRound
+  InitializationRound
+  DisputeResolutionRound
+  ResultsDisplayRound
+  ErrorHandlingRound
+  FinalizationRound
+  ResultsDisplayRound -->|ERROR| ErrorHandlingRound
+  ResultsDisplayRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionRound -->|DONE| FinalizationRound
+  DisputeResolutionRound -->|ERROR| ErrorHandlingRound
+  DisputeResolutionRound -->|TIMEOUT| TimeoutRound
+  DisputeResolutionRound -->|VOTING_MECHANISM| VotingRound
+  VotingRound -->|DONE| DisputeResolutionRound
+  VotingRound -->|TIMEOUT| DisputeResolutionRound
+  VotingRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| InitializationRound
+  ErrorHandlingRound -->|DONE| FinalizationRound
+  ErrorHandlingRound -->|MAX_RETRIES| FinalizationRound
+  ErrorHandlingRound -->|TIMEOUT| TimeoutRound
+  TimeoutRound -->|RETRY| ResultsDisplayRound
+  TimeoutRound -->|TIMEOUT| FinalizationRound

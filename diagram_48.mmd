@@ -1,0 +1,30 @@
+graph TD
+  orRound
+  LogErrorRound
+  MaxRetriesErrorRound
+  RecoveryRound
+  NotifyAdminRound
+  RestartRound
+  RetryRound
+  TimeoutErrorRound
+  FatalErrorRound
+  orRound
+  ErrorRound
+  orRound -->|DONE| RecoveryRound
+  orRound -->|TIMEOUT| TimeoutErrorRound
+  orRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| RetryRound
+  RetryRound -->|DONE| RecoveryRound
+  RetryRound -->|TIMEOUT| TimeoutErrorRound
+  RetryRound -->|ERROR| ErrorRound
+  RetryRound -->|MAX_RETRIES| MaxRetriesErrorRound
+  MaxRetriesErrorRound -->|MANUAL_RETRY_LIMIT| FatalErrorRound
+  FatalErrorRound -->|NOTIFY_ADMIN| NotifyAdminRound
+  FatalErrorRound -->|LOG_ERROR| LogErrorRound
+  FatalErrorRound -->|RESTART| RestartRound
+  RestartRound -->|DONE| orRound
+  NotifyAdminRound -->|DONE| LogErrorRound
+  LogErrorRound -->|DONE| orRound
+  ErrorRound -->|ERROR_TYPE| FatalErrorRound
+  FatalErrorRound -->|ERROR_TYPE| RestartRound
+  RestartRound -->|RELOAD_CONFIG| orRound

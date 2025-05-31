@@ -1,0 +1,28 @@
+graph TD
+  InitializationRound
+  CompletionRound
+  MaxRetriesErrorRound
+  NotifyAdminRound
+  ExecutionRound
+  InitializationRound
+  RetryRound
+  TimeoutErrorRound
+  FatalErrorRound
+  RetryCountRound
+  RetryDelayRound
+  ErrorRound
+  FinalizationRound
+  InitializationRound -->|DONE| ExecutionRound
+  InitializationRound -->|TIMEOUT| TimeoutErrorRound
+  InitializationRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| RetryRound
+  ErrorRound -->|FATAL_ERROR| FatalErrorRound
+  RetryRound -->|RETRY_COUNT| RetryCountRound
+  RetryRound -->|RETRY_DELAY| RetryDelayRound
+  RetryCountRound -->|MAX_RETRIES| MaxRetriesErrorRound
+  RetryCountRound -->|RETRY| RetryRound
+  RetryDelayRound -->|RETRY| RetryRound
+  FatalErrorRound -->|NOTIFY_ADMIN| NotifyAdminRound
+  MaxRetriesErrorRound -->|NOTIFY_ADMIN| NotifyAdminRound
+  ExecutionRound -->|DONE| CompletionRound
+  CompletionRound -->|DONE| FinalizationRound

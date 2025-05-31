@@ -1,0 +1,35 @@
+graph TD
+  HederaAgentDeploymentRound
+  ChainlinkOracleIntegrationRound
+  ProjectSubmissionRound
+  HederaAgentDeploymentRound
+  AIModelTrainingRound
+  DemoVideoCreationRound
+  ApplicationDeploymentRound
+  ProjectInitializationRound
+  HTSContractIntegrationRound
+  ProjectInitializationRound -->|DONE| HederaAgentDeploymentRound
+  HederaAgentDeploymentRound -->|DONE| AIModelTrainingRound
+  HederaAgentDeploymentRound -->|ERROR| HederaAgentDeploymentRound
+  HederaAgentDeploymentRound -->|TIMEOUT| ProjectInitializationRound
+  HederaAgentDeploymentRound -->|VALIDATION| HederaAgentDeploymentRound
+  AIModelTrainingRound -->|DONE| HTSContractIntegrationRound
+  AIModelTrainingRound -->|ERROR| AIModelTrainingRound
+  AIModelTrainingRound -->|TIMEOUT| HederaAgentDeploymentRound
+  AIModelTrainingRound -->|VALIDATION| AIModelTrainingRound
+  HTSContractIntegrationRound -->|DONE| ChainlinkOracleIntegrationRound
+  HTSContractIntegrationRound -->|ERROR| HTSContractIntegrationRound
+  HTSContractIntegrationRound -->|TIMEOUT| AIModelTrainingRound
+  HTSContractIntegrationRound -->|VALIDATION| HTSContractIntegrationRound
+  ChainlinkOracleIntegrationRound -->|DONE| ApplicationDeploymentRound
+  ChainlinkOracleIntegrationRound -->|ERROR| ChainlinkOracleIntegrationRound
+  ChainlinkOracleIntegrationRound -->|TIMEOUT| HTSContractIntegrationRound
+  ChainlinkOracleIntegrationRound -->|VALIDATION| ChainlinkOracleIntegrationRound
+  ApplicationDeploymentRound -->|DONE| DemoVideoCreationRound
+  ApplicationDeploymentRound -->|ERROR| ApplicationDeploymentRound
+  ApplicationDeploymentRound -->|TIMEOUT| ChainlinkOracleIntegrationRound
+  ApplicationDeploymentRound -->|VALIDATION| ApplicationDeploymentRound
+  DemoVideoCreationRound -->|DONE| ProjectSubmissionRound
+  DemoVideoCreationRound -->|ERROR| DemoVideoCreationRound
+  DemoVideoCreationRound -->|TIMEOUT| ApplicationDeploymentRound
+  DemoVideoCreationRound -->|VALIDATION| DemoVideoCreationRound

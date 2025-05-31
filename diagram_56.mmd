@@ -1,0 +1,19 @@
+graph TD
+  FailedRound
+  CompletionRound
+  FailedRound
+  ProcessingRound
+  InitializationRound
+  FinishedRound
+  InitializationRound -->|DONE| ProcessingRound
+  InitializationRound -->|TIMEOUT| InitializationRound
+  InitializationRound -->|ERROR| FailedRound
+  ProcessingRound -->|DONE| CompletionRound
+  ProcessingRound -->|TIMEOUT| ProcessingRound
+  ProcessingRound -->|ERROR| FailedRound
+  CompletionRound -->|DONE| FinishedRound
+  CompletionRound -->|TIMEOUT| CompletionRound
+  CompletionRound -->|ERROR| FailedRound
+  FailedRound -->|RESET| InitializationRound
+  FailedRound -->|TIMEOUT| FailedRound
+  FailedRound -->|ERROR| FailedRound

@@ -1,0 +1,17 @@
+graph TD
+  InitializationRound
+  PredictionMarketRound
+  TimeoutRound
+  RewardDistributionRound
+  InitializationRound
+  ErrorRound
+  FinalizationRound
+  CompletedRound
+  InitializationRound -->|DONE| PredictionMarketRound
+  PredictionMarketRound -->|DONE| FinalizationRound
+  FinalizationRound -->|DONE| RewardDistributionRound
+  RewardDistributionRound -->|DONE| CompletedRound
+  RewardDistributionRound -->|ERROR| ErrorRound
+  RewardDistributionRound -->|TIMEOUT| TimeoutRound
+  ErrorRound -->|RETRY| RewardDistributionRound
+  TimeoutRound -->|RETRY| RewardDistributionRound

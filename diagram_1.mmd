@@ -1,0 +1,34 @@
+graph TD
+  ErrorHandlingRound
+  ObservationCollectionRound
+  TimeoutRound
+  CrossChainSwapRound
+  ValidationRound
+  LoggingRound
+  SwapInitializationRound
+  FinalizationRound
+  ErrorHandlingRound
+  RegistrationRound
+  RegistrationRound -->|DONE| ObservationCollectionRound
+  RegistrationRound -->|ERROR| ErrorHandlingRound
+  RegistrationRound -->|TIMEOUT| TimeoutRound
+  ObservationCollectionRound -->|DONE| ValidationRound
+  ObservationCollectionRound -->|ERROR| ErrorHandlingRound
+  ObservationCollectionRound -->|TIMEOUT| TimeoutRound
+  ValidationRound -->|DONE| SwapInitializationRound
+  ValidationRound -->|ERROR| ErrorHandlingRound
+  ValidationRound -->|TIMEOUT| TimeoutRound
+  SwapInitializationRound -->|DONE| LoggingRound
+  SwapInitializationRound -->|ERROR| ErrorHandlingRound
+  SwapInitializationRound -->|TIMEOUT| TimeoutRound
+  SwapInitializationRound -->|SWAP_CANCELED| FinalizationRound
+  LoggingRound -->|DONE| CrossChainSwapRound
+  LoggingRound -->|ERROR| ErrorHandlingRound
+  LoggingRound -->|TIMEOUT| TimeoutRound
+  CrossChainSwapRound -->|DONE| FinalizationRound
+  CrossChainSwapRound -->|ERROR| ErrorHandlingRound
+  CrossChainSwapRound -->|TIMEOUT| TimeoutRound
+  ErrorHandlingRound -->|RETRY| RegistrationRound
+  ErrorHandlingRound -->|FAIL| FinalizationRound
+  TimeoutRound -->|RETRY| RegistrationRound
+  TimeoutRound -->|FAIL| FinalizationRound

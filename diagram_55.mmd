@@ -1,0 +1,29 @@
+graph TD
+  ErrorHandlingRound
+  CompletionRound
+  ChainlinkOracleIntegrationRound
+  TimeoutRound
+  InitializationRound
+  LayerZeroOmnichainMessagingRound
+  PythNetworkDataOracleRound
+  ErrorHandlingRound
+  FinalizationRound
+  HTSContractIntegrationRound
+  InitializationRound -->|DONE| HTSContractIntegrationRound
+  HTSContractIntegrationRound -->|DONE| ChainlinkOracleIntegrationRound
+  ChainlinkOracleIntegrationRound -->|DONE| LayerZeroOmnichainMessagingRound
+  LayerZeroOmnichainMessagingRound -->|DONE| PythNetworkDataOracleRound
+  PythNetworkDataOracleRound -->|VALID| FinalizationRound
+  PythNetworkDataOracleRound -->|INVALID| ErrorHandlingRound
+  FinalizationRound -->|DONE| CompletionRound
+  InitializationRound -->|ERROR| ErrorHandlingRound
+  HTSContractIntegrationRound -->|ERROR| ErrorHandlingRound
+  ChainlinkOracleIntegrationRound -->|ERROR| ErrorHandlingRound
+  LayerZeroOmnichainMessagingRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RESET| InitializationRound
+  InitializationRound -->|TIMEOUT| TimeoutRound
+  HTSContractIntegrationRound -->|TIMEOUT| TimeoutRound
+  ChainlinkOracleIntegrationRound -->|TIMEOUT| TimeoutRound
+  LayerZeroOmnichainMessagingRound -->|TIMEOUT| TimeoutRound
+  PythNetworkDataOracleRound -->|TIMEOUT| TimeoutRound
+  TimeoutRound -->|DONE| InitializationRound

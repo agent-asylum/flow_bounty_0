@@ -1,0 +1,36 @@
+graph TD
+  SetupRound
+  CompletionRound
+  HCSIntegrationRound
+  SetupRound
+  DataAnalyticsRound
+  HTSIntegrationRound
+  ValidationRound
+  LoggingRound
+  ReportingRound
+  ErrorHandlingRound
+  DecisionMakingRound
+  SetupRound -->|DONE| LoggingRound
+  LoggingRound -->|DONE| DataAnalyticsRound
+  DataAnalyticsRound -->|DONE| ValidationRound
+  ValidationRound -->|DONE| ReportingRound
+  ReportingRound -->|DONE| DecisionMakingRound
+  DecisionMakingRound -->|DONE| HTSIntegrationRound
+  HTSIntegrationRound -->|DONE| HCSIntegrationRound
+  HCSIntegrationRound -->|DONE| CompletionRound
+  LoggingRound -->|ERROR| ErrorHandlingRound
+  DataAnalyticsRound -->|ERROR| ErrorHandlingRound
+  ValidationRound -->|ERROR| ErrorHandlingRound
+  ReportingRound -->|ERROR| ErrorHandlingRound
+  DecisionMakingRound -->|ERROR| ErrorHandlingRound
+  HTSIntegrationRound -->|ERROR| ErrorHandlingRound
+  HCSIntegrationRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|DONE| LoggingRound
+  SetupRound -->|TIMEOUT| ErrorHandlingRound
+  LoggingRound -->|TIMEOUT| ErrorHandlingRound
+  DataAnalyticsRound -->|TIMEOUT| ErrorHandlingRound
+  ValidationRound -->|TIMEOUT| ErrorHandlingRound
+  ReportingRound -->|TIMEOUT| ErrorHandlingRound
+  DecisionMakingRound -->|TIMEOUT| ErrorHandlingRound
+  HTSIntegrationRound -->|TIMEOUT| ErrorHandlingRound
+  HCSIntegrationRound -->|TIMEOUT| ErrorHandlingRound

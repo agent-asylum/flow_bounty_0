@@ -1,0 +1,14 @@
+graph TD
+  InitializationRound
+  IntegrationRound
+  FailedRound
+  InitializationRound
+  ErrorRound
+  FinishedRound
+  InitializationRound -->|DONE| IntegrationRound
+  IntegrationRound -->|DONE| FinishedRound
+  IntegrationRound -->|ERROR| ErrorRound
+  ErrorRound -->|RETRY| IntegrationRound
+  ErrorRound -->|MAX_RETRIES| FailedRound
+  ErrorRound -->|LOG_ERROR| ErrorRound
+  FailedRound -->|DONE| FinishedRound

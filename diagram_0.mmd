@@ -1,0 +1,19 @@
+graph TD
+  InitializationRound
+  DataValidationRound
+  TimeoutRound
+  ModelSelectionRound
+  FailedRound
+  InitializationRound
+  ContractMonitoringRound
+  ContractUpdateRound
+  ErrorHandlingRound
+  InitializationRound -->|DONE| DataValidationRound
+  DataValidationRound -->|DONE| ModelSelectionRound
+  ModelSelectionRound -->|DONE| ContractUpdateRound
+  ContractUpdateRound -->|DONE| ContractMonitoringRound
+  ContractMonitoringRound -->|ERROR| ErrorHandlingRound
+  ErrorHandlingRound -->|RETRY| ContractUpdateRound
+  ErrorHandlingRound -->|FAIL| FailedRound
+  ContractUpdateRound -->|TIMEOUT| TimeoutRound
+  TimeoutRound -->|RETRY| ContractUpdateRound
